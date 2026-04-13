@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta property="og:title" content="Mohamed Atef | Flutter Developer">
+
+  <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+<meta property="og:title" content="Mohamed Atef | Flutter Developer">
+<meta property="og:description" content="Flutter Developer building high-performance apps using Flutter, Firebase, and REST APIs.">
+<meta property="og:image" content="https://mohamed-atef.dev/preview.jpg">
+<meta property="og:url" content="https://mohamed-atef.dev/">
+<meta property="og:type" content="website">
+
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mohamed Atef">
+<meta name="twitter:description" content="Flutter Developer Portfolio">
+<meta name="twitter:image" content="https://mohamed-atef.dev/preview.jpg">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  
+<title>Mohamed Atef</title>
+
+<link rel="icon" href="https://mohamed-atef.dev/atef.jpg">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<link rel="stylesheet" href="style.css">
+  
+
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero reveal">
+  <div id="particles-js"></div>
+
+  <div class="content">
+    <img src="https://mohamed-atef.dev/atef.jpg" class="avatar">
+
+    <h1 class="stagger">Mohamed Atef</h1>
+    <p class="stagger">Flutter Developer | Software Engineer</p>
+
+    <div class="social">
+      <a href="https://facebook.com/VD806"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://instagram.com/a3tofdev"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://github.com/a3tof"><i class="fab fa-github"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section reveal">
+  <h2>About Me</h2>
+  <p class="stagger">I am Mohamed Atef, a Flutter Developer based in Egypt.</p>
+  <p class="stagger">I build high-performance mobile apps using Flutter, Firebase, and REST APIs.</p>
+</section>
+
+<!-- SKILLS -->
+<section class="section dark reveal">
+  <h2>Skills</h2>
+
+  <div class="skills">
+    <div class="skill stagger">Flutter</div>
+    <div class="skill stagger">Dart</div>
+    <div class="skill stagger">Firebase</div>
+    <div class="skill stagger">REST APIs</div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section reveal">
+  <h2>Projects</h2>
+  <div class="projects" id="projects-container"></div>
+</section>
+
+<!-- CONTACT -->
+<section class="section dark reveal">
+  <h2>Let's Work Together</h2>
+  <a href="https://wa.me/201022586786" class="btn stagger">Chat on WhatsApp</a>
+</section>
+
+<footer class="reveal">
+  Mohamed Atef © 2026
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+<script>
+/* particles */
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 50 },
+    size: { value: 3 },
+    move: { speed: 1.2 },
+    line_linked: { enable: true }
+  }
+});
+
+/* animation observer */
+function observeElements() {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+
+        entry.target.querySelectorAll(".stagger").forEach((el, i) => {
+          setTimeout(() => {
+            el.classList.add("show");
+          }, i * 150);
+        });
+
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+}
+
+/* projects */
+async function loadProjects() {
+  const container = document.getElementById("projects-container");
+
+  try {
+    const res = await fetch("https://api.github.com/users/a3tof/repos");
+    const data = await res.json();
+
+    const repos = data.slice(0,6);
+
+    container.innerHTML = repos.map(repo => `
+      <div class="card reveal">
+        <h3>${repo.name}</h3>
+        <p>${repo.description || "No description"}</p>
+        <a href="${repo.html_url}" target="_blank" class="view-btn">
+          View Project
+        </a>
+      </div>
+    `).join("");
+
+    observeElements(); // 🔥 مهم
+
+  } catch {
+    container.innerHTML = "<p>Failed to load projects</p>";
+  }
+}
+
+observeElements();
+loadProjects();
+</script>
+
+</body>
+</html>
