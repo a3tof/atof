@@ -136,7 +136,18 @@ async function loadProjects() {
     const res = await fetch("https://api.github.com/users/a3tof/repos");
     const data = await res.json();
 
-    const repos = data.slice(0,6);
+    const selectedRepos = [
+      "safqaSeller",
+      "e-commerce",
+      "rocketsFastFood",
+      "booklyApp",
+      "notesApp",
+      "chatApp"
+    ];
+
+    const repos = selectedRepos.map(name =>
+      data.find(repo => repo.name === name)
+    ).filter(Boolean);
 
     container.innerHTML = repos.map(repo => `
       <div class="card reveal">
@@ -148,13 +159,12 @@ async function loadProjects() {
       </div>
     `).join("");
 
-    observeElements(); // 🔥 مهم
+    observeElements();
 
   } catch {
     container.innerHTML = "<p>Failed to load projects</p>";
   }
 }
-
 observeElements();
 loadProjects();
 </script>
